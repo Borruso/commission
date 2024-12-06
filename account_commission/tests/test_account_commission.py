@@ -37,7 +37,7 @@ class TestAccountCommission(TestCommissionBase):
         )
         cls.default_line_account = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", cls.company.id),
                 ("account_type", "=", "asset_receivable"),
             ],
             limit=1,
@@ -53,7 +53,7 @@ class TestAccountCommission(TestCommissionBase):
         )
         cls.income_account = cls.env["account.account"].search(
             [
-                ("company_id", "=", cls.company.id),
+                ("company_ids", "in", cls.company.id),
                 ("account_type", "=", "income"),
             ],
             limit=1,

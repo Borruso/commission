@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 
-from odoo import _, api, exceptions, fields, models
+from odoo import api, exceptions, fields, models
 
 
 class AccountMove(models.Model):
@@ -78,7 +78,7 @@ class AccountMove(models.Model):
         """
         if any(self.mapped("invoice_line_ids.any_settled")):
             raise exceptions.ValidationError(
-                _("You can't cancel an invoice with settled lines"),
+                self.env._("You can't cancel an invoice with settled lines"),
             )
         self.mapped("line_ids.settlement_id").write({"state": "except_invoice"})
         return super().button_cancel()
@@ -215,7 +215,7 @@ class AccountInvoiceLineAgent(models.Model):
         for record in self:
             if any(record.mapped("settled")):
                 raise exceptions.ValidationError(
-                    _("You can't modify a settled line"),
+                    record.env._("You can't modify a settled line"),
                 )
 
     def _skip_settlement(self):
